@@ -1,6 +1,8 @@
 #ifndef CINTA_H
 #define CINTA_H
 
+/*Prueba de svn*/
+
 #include "bool.h"
 
 #include "tcalpha.h"  /*aca se definen las funciones tcalpha_***   */
