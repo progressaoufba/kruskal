@@ -1,4 +1,5 @@
 #include "foresta.h"
+#include <err.h>
 
 struct sunion_find {
 	tufset *rep;
@@ -24,13 +25,14 @@ uf_add_singulete(union_find uf, const tufalpha el) {}
 
 tufset
 uf_find(union_find uf, const tufalpha el) {
-	tufalpha aux;
+	tufpos aux;
 	aux = el;
-	if (uf!=NULL)
+	if (uf==NULL)
+		errx (ENOMEM,"no hay memoria")
 		if (uf->rep!=NULL)
-			while (uf->rep[aux]>=0)
+			if (uf->rep[aux]>=0)
 				aux = rep[aux];
-	return 
+	return aux;
 		
 		
 		
