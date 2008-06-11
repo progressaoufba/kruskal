@@ -85,13 +85,10 @@ cinta_ins(cinta c, tcalpha a) {
 void 
 cinta_del(cinta c) {
 	aList aux;
-	aux=(aList)calloc(1,sizeof(struct celda));
-	aux->el=NULL;
-	aux->tl=c->ppd->tl->tl;
+	aux = c->ppd->tl->tl;
 	c->ppd->tl->el = tcalpha_destroy(c->ppd->tl->el);
 	free (c->ppd->tl);
-	c->ppd->tl=aux->tl;
-	free(aux);
+	c->ppd->tl=aux;
 }
 
 aList 
