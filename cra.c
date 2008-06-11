@@ -34,7 +34,7 @@ cra_arr(cintrar cra) { /* arrancar */
 	fscanf (stdin,"# %d %d\n",&vcant, &acant);
 	cra->vcant = vcant;
 	cra->acant = acant;
-	cra->arem = acant+1; /*el +1 es porque keremos que cra_fin signifique que no hay 					mas elementos para leer*/
+	cra->arem  = acant; 
 	cra->arr = TRUE; 
 	while (getchar()!='\n');
 	cra_av(cra);
@@ -61,8 +61,11 @@ arista
 cra_elec(const cintrar cra) {
 	if (!cra->arr) 
 		warnx("Error, la cinta no esta arrancada");
-	
-	return cinta_elec(cra->c);
+		
+	if (!cra_fin(cra))
+		return cinta_elec(cra->c);
+	else	
+		return NULL;
 }
 
 bool
@@ -70,7 +73,7 @@ cra_fin(const cintrar cra) {
 	if (!cra->arr) 
 		warnx("Error, la cinta no esta arrancada");
 	
-	return cra->arem==0;
+	return cra->arem==-1;/*el -1 es porque keremos que cra_fin sea que ya no hay nada*/
 }
 	
 int
