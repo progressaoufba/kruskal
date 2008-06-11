@@ -34,11 +34,11 @@ cra_arr(cintrar cra) { /* arrancar */
 	fscanf (stdin,"# %d %d\n",&vcant, &acant);
 	cra->vcant = vcant;
 	cra->acant = acant;
-	cra->arem = acant;
+	cra->arem = acant+1; /*el +1 es porque keremos que cra_fin signifique que no hay 					mas elementos para leer*/
 	cra->arr = TRUE; 
 	while (getchar()!='\n');
 	cra_av(cra);
-}	
+}
 
 void
 cra_av(cintrar cra) {
