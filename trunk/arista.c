@@ -47,5 +47,6 @@ arista_clone(arista e) {
 arista
 arista_destroy(arista e) {
 	free (e);
+	printf("arista_destroy\n");
 	return NULL;
 }

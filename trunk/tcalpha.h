@@ -5,10 +5,10 @@
 typedef  arista tcalpha;
 
 tcalpha
-tcalpha_clone(tcalpha a);
+tcalpha_clone (tcalpha a);
 
 tcalpha
-tcalpha_destroy(tcalpha a);
+tcalpha_destroy (tcalpha a);
 
 
 #endif

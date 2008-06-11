@@ -1,13 +1,12 @@
-#include <stdio.h>
 #include "tcalpha.h"
 
-
-alpha
-alpha_clone (alpha a) {
+tcalpha
+tcalpha_clone(tcalpha a) {
 	return arista_clone(a);
 }
 
-alpha
-alpha_destroy (alpha a) {
+tcalpha
+tcalpha_destroy(tcalpha a) {
 	return arista_destroy(a);
 }
+

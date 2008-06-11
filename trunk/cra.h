@@ -11,7 +11,7 @@ cintrar
 cra_create(void); /* constructor */
 
 void
-cra_arr(cintrar cra); /* arrancar */
+cra_arr(cintrar cra); /* arrancar...OJO!,aca se hace un cra_av */
 
 void
 cra_av(cintrar cra); /* avanzar */

@@ -19,12 +19,6 @@ struct scinta {
 
 aList 
 aList_vacia(void) {
-	/*aList a=NULL;
-	a=(aList)calloc(1,sizeof(struct celda));
-	if (a!=NULL){
-		a->el=NULL;
-		a->tl=NULL;
-}*/
 	return NULL;
 }
 
@@ -66,7 +60,7 @@ cinta_av(cinta c) {
 tcalpha 
 cinta_elec(cinta c) {
 	if (!c->arr)
-	warnx("Error, la cinta no esta arrancada");
+		warnx("Error, la cinta no esta arrancada");
 	if (cinta_fin(c)) return NULL;
 	return c->ppd->tl->el;
 }
@@ -76,10 +70,13 @@ cinta_ins(cinta c, tcalpha a) {
 	aList cel;
 	cel=(aList)calloc(1,sizeof(struct celda));
 	if (cel!=NULL) {
+		if (c->arr==FALSE)
+			cinta_arr(c);
 		cel->el=tcalpha_clone(a);
 		cel->tl = c->ppd->tl;
-		c->ppd->tl=cel;
+		c->ppd->tl=cel;		
 	}
+	
 }
 
 void 
@@ -94,7 +91,7 @@ cinta_del(cinta c) {
 aList 
 cinta_destroy(cinta c){
 	aList aux;
-	aux=c->cd.tl;
+	aux = (c->cd).tl;
 	free(c);
 	return aux;
 }

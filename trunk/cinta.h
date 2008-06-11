@@ -2,7 +2,6 @@
 #define CINTA_H
 
 #include "bool.h"
-
 #include "tcalpha.h"  /*aca se definen las funciones tcalpha_***   */
 
 
