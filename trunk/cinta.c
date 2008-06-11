@@ -81,6 +81,8 @@ cinta_ins(cinta c, tcalpha a) {
 
 void 
 cinta_del(cinta c) {
+	if (!c->arr)
+		warnx("Error, la cinta no esta arrancada");
 	aList aux;
 	aux = c->ppd->tl->tl;
 	c->ppd->tl->el = tcalpha_destroy(c->ppd->tl->el);
