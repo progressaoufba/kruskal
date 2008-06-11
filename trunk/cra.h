@@ -20,7 +20,7 @@ arista
 cra_elec(const cintrar cra); /* elemento corriente */
 
 bool
-cra_fin(const cintrar cra); /* fin cinta */
+cra_fin(const cintrar cra); /* fin cinta.. OJO!, vale TRUE cuando la cinta se "cayo"*/
 
 int
 cra_vcant(const cintrar cra); /* devuelve la cantidad de vertices */
