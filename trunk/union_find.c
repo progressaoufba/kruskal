@@ -1,4 +1,6 @@
-#include "foresta.h"
+#include "union_find.h"
+#include <stdio.h>
+#include <stdlib.h>
 #include <err.h>
 
 struct sunion_find {
@@ -6,16 +8,25 @@ struct sunion_find {
 	int max_size;
 };
 
+bool
+es_rep(const union_find uf, const tufpos el);/* funcion auxiliar */
+
+tufpos
+rep_find(const union_find uf, const tufpos el);/* funcion auxiliar */
+
+
+
 union_find
 uf_create(const tufpos max) {
+	int i;
 	union_find uf;
 	uf = (union_find)calloc(1,sizeof(struct sunion_find));
 	if (uf!=NULL) {
-		uf->rep = (tufset)calloc((size_t)max,sizeof tufset);
+		uf->rep = (tufset)calloc((size_t)max,sizeof(tufset)); /*????*/
 		if (uf->rep!=NULL) {
-			for (i=0,i<=max_size,i++)
-				uf->rep[i] = -1;
 			uf->max_size = max;
+			for (i=0;i<=uf->max_size;i++)
+				uf->rep[i] = -1;
 		}
 	}
 }
@@ -25,14 +36,62 @@ uf_add_singulete(union_find uf, const tufalpha el) {}
 
 tufset
 uf_find(union_find uf, const tufalpha el) {
-	tufpos aux;
-	aux = el;
-	if (uf==NULL)
-		errx (ENOMEM,"no hay memoria")
-		if (uf->rep!=NULL)
-			if (uf->rep[aux]>=0)
-				aux = rep[aux];
-	return aux;
-		
-		
-		
+	tufpos r,k;
+	tufset j;
+	
+	if (uf!=NULL)
+		if (uf->rep!=NULL) {
+			r = el;
+			k = el;
+			while (!es_rep(uf,r))
+				r = uf->rep[r];
+				
+			while (!es_rep(uf,k)) {
+				j = uf->rep[k];
+				uf->rep[k] = r;
+				k = j;
+			}
+		}
+	return r;
+}
+
+void
+uf_union(union_find uf, const tufset s1, const tufset s2) {
+	if (!es_rep(uf,s1) || !es_rep(uf,s2))
+		errx(1,"Los argumentos debes ser representantes!, puto\n");
+	if (uf->rep[s1] <= uf->rep[s2]) {
+		uf->rep[s1] += uf->rep[s2];
+		uf->rep[s2]  = s1;
+	}
+	else {
+		uf->rep[s2] += uf->rep[s1];
+		uf->rep[s1]  = s2;		
+	}
+}
+
+bool
+uf_oneset(const union_find uf) {
+	return (uf->rep[rep_find(uf,0)]==uf->max_size-1);
+}  /* si hay un set, el representante debe ser igual a -max_size */
+
+
+union_find
+uf_destroy(union_find uf) {
+	free (uf->rep);
+	free (uf);
+	return NULL;
+}
+	
+bool
+es_rep(const union_find uf, const tufpos el) { 
+	return  uf->rep[el]<0;
+}
+
+tufpos
+rep_find(const union_find uf, const tufpos el) {
+	tufpos r = el;
+	while (!es_rep(uf,r))
+		r = uf->rep[r];
+	return r;
+}
+
