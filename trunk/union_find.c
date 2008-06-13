@@ -11,13 +11,12 @@ struct sunion_find {
 };
 
 bool
-es_rep(const union_find uf, const tufpos el);/* funcion auxiliar */
+es_rep(const union_find uf, const tufpos el);  /* funcion auxiliar */
 
 tufpos
 rep_find(const union_find uf, const tufpos el);/* funcion auxiliar */
 
-
-
+/********************************************************************************************/
 union_find
 uf_create(const tufpos max) {
 	int i;
@@ -26,7 +25,7 @@ uf_create(const tufpos max) {
 	if (uf!=NULL) {
 		uf->rep = (ptufset)calloc(max,sizeof(tufset));
 		if (uf->rep!=NULL)
-			for (i=0;i<uf->max_size;i++)
+			for (i=0;i<max;i++)
 				uf->rep[i] = -1;
 		uf->max_size = max;
 	}
@@ -60,9 +59,10 @@ uf_find(union_find uf, const tufalpha el) {
 void
 uf_union(union_find uf, const tufset s1, const tufset s2) {
 	if (!es_rep(uf,s1) || !es_rep(uf,s2))
-		errx(1,"Los argumentos debes ser representantes!, puto. \n");
+		errx(1,"Error, los argumentos de uf_union no son representantes!.\n");
 	else {
-		if (uf->rep[s1] > uf->rep[s2]) {
+		printf ("UF_before: s1= %d, s2= %d\n",uf->rep[s1],uf->rep[s2]);
+		if (uf->rep[s1] <= uf->rep[s2]) {
 			uf->rep[s1] += uf->rep[s2];
 			uf->rep[s2]  = s1;
 		}
@@ -70,13 +70,14 @@ uf_union(union_find uf, const tufset s1, const tufset s2) {
 			uf->rep[s2] += uf->rep[s1];
 			uf->rep[s1]  = s2;	
 		}
+		printf ("UF_after: s1= %d, s2= %d\n",uf->rep[s1],uf->rep[s2]);
 	}
 }
 
 bool
 uf_oneset(const union_find uf) {
 	return (uf->rep[rep_find(uf,0)]==-uf->max_size);
-}  /* si hay un set, el representante debe ser igual a -max_size */
+}  /*si hay un solo set, el representante debe ser igual a -max_size */
 
 
 union_find
@@ -88,7 +89,7 @@ uf_destroy(union_find uf) {
 	
 bool
 es_rep(const union_find uf, const tufpos el) { 
-	return uf->rep[el]<=0;
+	return uf->rep[el]<0;
 }
 
 tufpos
