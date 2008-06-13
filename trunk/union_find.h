@@ -2,9 +2,10 @@
 #define UNION_FIND_H
 
 #include "bool.h"
-#include "tufpos.h"   /* posiciones de rep */
-#include "tufalpha.h" /* tipo arista */
-#include "tufset.h"   /* elementos de rep */
+
+typedef int tufpos;
+typedef int tufalpha; 
+typedef int tufset;
 
 
 typedef struct sunion_find *union_find;
