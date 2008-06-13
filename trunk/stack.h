@@ -5,12 +5,6 @@
 #include "bool.h"
 #include "stalpha.h"
 
-/*debemos definir en stalpha.h:
-	stalpha stalpha_clone(const stalpha a);
-	void stalpha_destroy(stalpha a);
-*/
-
-
 typedef struct sstack * stack;
 
 stack
@@ -28,12 +22,10 @@ stack_vacia (const stack s);
 stalpha
 stack_top(const stack s);/*devolvemos el de mas arriva*/
 
-
-
-/*vamos a eliminar todos los elementos que contiene el stack y despues lo liberamos*/
 stack
 stack_desapilar (stack s);/*sacamos el de mas arriva*/
 
+/*vamos a eliminar todos los elementos que contiene el stack y despues lo liberamos*/
 stack
 stack_destroy(stack s);/*destructor*/
 

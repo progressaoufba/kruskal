@@ -14,4 +14,5 @@ stalpha_clone(const stalpha a){
 void
 stalpha_destroy(stalpha a){
 	a=arista_destroy(a);
+	a=NULL;
 }
