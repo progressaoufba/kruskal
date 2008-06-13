@@ -2,10 +2,9 @@
 #define UNION_FIND_H
 
 #include "bool.h"
-
-typedef int tufpos;
-typedef int tufalpha; 
-typedef int tufset;
+#include "tufpos.h"
+#include "tufalpha.h"
+#include "tufset.h"
 
 
 typedef struct sunion_find *union_find;
