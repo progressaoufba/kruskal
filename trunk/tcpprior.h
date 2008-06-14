@@ -1,4 +1,4 @@
-/*ESTAMOS USANDO halpha_menor, dentro del heap
+/*ESTAMOS USANDO alpha_menor, dentro del heap
   NO SIRVEDE NADA ESTA COSA */
 
 #ifndef TCPPRIOR_H
