@@ -1,28 +1,26 @@
 #ifndef HEAP_H
 #define HEAP_H
-
-#include "halpha.h"
-
+#include "bool.h"
+#include "thalpha.h"
 
 
 /*debemos definir :
-		  bool halpha_menor(halpha a,halpha b); return a<b;
-		  void halpha_swap(halpha *x,int a, int b);
-		  halpha halpha_clone(halpha a);
-		  void halpha_destroy (halpha a);
+		  bool thalpha_menor(thalpha a,thalpha b); return a<b;
+		  void thalpha_swap(thalpha *x,int a, int b);
+		  thalpha thalpha_clone(thalpha a);
+		  void thalpha_destroy (thalpha a);
 		  */
 typedef struct sheap * heap;
 
 heap
-heap_create(const size_t tam); /*constructor, tam=tamaño del arreglo, hay q hacerlo mas general
-			 . usar otro tipo en vez de size_t*/
+heap_create(const size_t tam); /* constructor */
 
 heap
-heap_insert(heap h, const halpha a); /* encolar */
+heap_insert(heap h, const thalpha a); /* encolar */
 
 /*tener en cuenta que hay que llamarlo solo si no es vacio
-  ademas GENERA MEMORIA, halpha_clone*/
-halpha
+  ademas GENERA MEMORIA, thalpha_clone*/
+thalpha
 heap_first(const heap h); /* primero en la cola */
 
 heap
@@ -34,14 +32,14 @@ heap_vacio(const heap h); /* cola vacia? */
 bool
 heap_lleno(const heap h); /* cola llena? */
 
-/*tener en cuenta que GENERA MEMORIA, hacerle free al halpha*/
-halpha
+/*tener en cuenta que GENERA MEMORIA, hacerle free al thalpha*/
+thalpha
 heap_saca(heap h); /* saca y obtiene cualquier elemento, en este caso el ultimo
 		      esto es mas eficiente*/
 
 
 /*vamos a destruir todo el heap completo con todos los datos adentro
-  tener cuidado, porque al borrar cada halpha despues no vamos a poder
+  tener cuidado, porque al borrar cada thalpha despues no vamos a poder
   acceder nunca mas a esos datos*/
 heap
 heap_destroy(heap h); /* destructor*/ 
