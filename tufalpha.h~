@@ -1,7 +1,0 @@
-#ifndef TUFALPHA_H
-#define TUFALPHA_H
-#include "arista.h"
-
-typedef arista tufalpha;
-
-#endif
