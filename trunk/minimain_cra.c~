@@ -1,0 +1,22 @@
+#include <stdio.h>
+#include "cra.h"
+#include "arista.h"
+
+int main (void) {
+	cintrar cra = NULL;
+	arista e = NULL;
+	int v1,v2,weight;
+	cra = cra_create();
+	cra_arr(cra);
+	do {
+		e  = cra_elec(cra);
+		v1 = arista_fst(e);
+		v2 = arista_snd(e);
+		weight = arista_weight(e);
+		fprintf(stdout,"%d -- %d [label = %d];\n",v1,v2,weight);
+		cra_av(cra);
+
+	} (!cra_fin(cra));
+	cra_destroy(cra);
+	return 0;
+}
