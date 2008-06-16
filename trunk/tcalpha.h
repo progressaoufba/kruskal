@@ -1,5 +1,7 @@
 #ifndef TCALPHA_H
 #define TCALPHA_H
+
+#include <stdlib.h>
 #include "arista.h"
 
 typedef  arista tcalpha;

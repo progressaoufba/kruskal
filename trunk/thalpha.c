@@ -12,4 +12,16 @@ thalpha_destroy (thalpha a) {
 
 bool 
 thalpha_menor(thalpha a,thalpha b) {
-	return 
+	return (arista_weight(a)<arista_weight(b));
+}
+
+void
+thalpha_swap(thalpha *x,int a, int b){
+	arista e;
+	
+	e=arista_clone(x[a]);
+	arista_destroy(x[a]);
+	x[a]=x[b];
+	x[b]=e;
+}
+	

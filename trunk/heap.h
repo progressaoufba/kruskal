@@ -1,5 +1,6 @@
 #ifndef HEAP_H
 #define HEAP_H
+#include <stdlib.h>
 #include "bool.h"
 #include "thalpha.h"
 
