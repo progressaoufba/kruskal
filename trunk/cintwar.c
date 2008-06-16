@@ -59,8 +59,13 @@ cwa_ainsrest(cintwar cwa, arista a) {
 	v1 = arista_fst(a);
 	v2 = arista_snd(a);
 	w  = arista_weight(a);
-	fprintf(cwa->f,"  %d--%d [label=%d,style=[dotted];\n",v1,v2,w);
+	fprintf(cwa->f,"  %d--%d [label=%d,style=dotted];\n",v1,v2,w);
 	}
+}
+
+void
+cwa_insmsg(cintwar cwa, char *msg ) {
+	fprintf(cwa->f,msg);
 }
 
 cintwar

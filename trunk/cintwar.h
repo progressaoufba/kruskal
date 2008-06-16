@@ -23,4 +23,7 @@ cwa_destroy(cintwar cwa); /* destructor */
 /* INFO: es necesario hacer esto para "cerrar" el archivo con "}" */
 
 
+void
+cwa_insmsg(cintwar cwa, char *msg ); /* para dar info extra en el archivo (punto *) */
+
 #endif

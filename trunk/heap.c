@@ -8,6 +8,38 @@ struct sheap{
 	thalpha * elems;
 };
 
+int
+hijo_izq(int p);
+
+int
+hijo_der(int p);
+
+int
+padre(int h);
+
+bool
+tiene_padre(heap h, int p);
+
+bool
+tiene_hijo(heap h, int p);
+
+int
+hijo_menor(heap h, int p);
+
+heap
+subir (heap h, int q);
+
+bool
+debe_subir (heap h, int q);
+
+heap
+flotar (heap h, int q);
+
+heap
+hundir(heap h,int q);
+
+
+
 /******************************funciones adicionales****************************/
 
 int
@@ -21,12 +53,12 @@ hijo_der(int p){/*tiene que tener hijo*/
 }
 
 int
-padre (int h){/*no tiene q ser el de arriba de todos*/
+padre(int h){/*no tiene q ser el de arriba de todos*/
 	return (int) h/2;
 }
 
 bool
-tiene_hijo (heap h, int p){
+tiene_hijo(heap h, int p){
 	if (p <= h->size && p>=1)
 		return (2*p<=h->size);
 	else
@@ -39,7 +71,7 @@ tiene_padre(heap h, int p){
 }
 
 int
-hijo_menor (heap h, int p){
+hijo_menor(heap h, int p){
 	if (tiene_hijo(h,p))
 		if (hijo_der(p)<= h->size && thalpha_menor(h->elems[hijo_der(p)],h->elems[hijo_izq(p)]))
 			return hijo_der(p);

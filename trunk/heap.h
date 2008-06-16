@@ -19,10 +19,10 @@ heap_create(const size_t tam); /* constructor */
 heap
 heap_insert(heap h, const thalpha a); /* encolar */
 
-/*tener en cuenta que hay que llamarlo solo si no es vacio
-  ademas GENERA MEMORIA, thalpha_clone*/
 thalpha
 heap_first(const heap h); /* primero en la cola */
+/*tener en cuenta que hay que llamarlo solo si no es vacio
+  ademas GENERA MEMORIA, thalpha_clone*/
 
 heap
 heap_pop(heap h); /* saca primero osea el maximo */

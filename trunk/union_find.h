@@ -24,7 +24,12 @@ uf_union(union_find uf, const tufset s1, const tufset s2);/* union de los conjun
 bool
 uf_oneset(const union_find uf); /* hay solo un conjunto? */
 
+
+int
+uf_cant_conj(union_find uf); /* dice cuantos conjuntos hay (punto *) */
+
 union_find
 uf_destroy(union_find uf); /* destructor */
+
 
 #endif

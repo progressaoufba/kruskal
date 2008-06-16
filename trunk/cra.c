@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <assert.h>
+#include <err.h>
 #include "cinta.h"
 #include "cra.h"
 #include "arista.h"
+
 
 struct scintrar {
 	int vcant;
@@ -42,13 +44,14 @@ cra_arr(cintrar cra) { /* arrancar */
 
 void
 cra_av(cintrar cra) {
+	int v1,v2,weight;
+	arista e;
+	
 	if (cra_fin(cra)) 
 		warnx("Error, Fin de cinta");
 	if (!cra->arr) 
 		warnx("Error, la cinta no esta arrancada");
 	
-	int v1,v2,weight;
-	arista e;
 	e = NULL;
 	scanf("%d -- %d [label = %d];",&v1,&v2,&weight);
 	e = arista_create(v1,v2,weight);	
