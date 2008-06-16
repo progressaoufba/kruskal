@@ -11,21 +11,21 @@ stack_create(const size_t maxt){
 	s=(stack)calloc(1,sizeof(struct sstack));
 	if (s!=NULL){
 		s->tam=0;
-		s->elems=(stalpha *)calloc(maxt+1,sizeof(stalpha));
+		s->elems=(stalpha *)calloc(maxt,sizeof(stalpha));
 	}
 	return s;
 }
 
 stack
-stack_apilar(stack s,const stalpha a){
-	s->tam=s->tam+1;
+stack_push(stack s,const stalpha a){
 	s->elems[s->tam]=a;
+	s->tam++;
 	return s;
 }
 
 
 bool
-stack_vacia (const stack s){
+stack_empty (const stack s){
 	return (s->tam<=0);
 }
 
@@ -35,13 +35,13 @@ stack_vacia (const stack s){
 stalpha
 stack_top(const stack s){
 	stalpha a;
-	a=stalpha_clone(s->elems[s->tam]); /*generamos memoria*/
+	a=stalpha_clone(s->elems[s->tam-1]); /*generamos memoria*/
 	return a;
 }
 
 stack
-stack_desapilar (stack s){
-	if (!stack_vacia(s)){
+stack_pop (stack s){
+	if (!stack_empty(s)){
 		stalpha_destroy(s->elems[s->tam]);
 		s->tam=s->tam-1;
 	}
@@ -52,8 +52,8 @@ stack_desapilar (stack s){
 
 stack
 stack_destroy(stack s){
-	while(!stack_vacia(s)){
-		s=stack_desapilar(s);
+	while(!stack_empty(s)){
+		s=stack_pop(s);
 	}
 	free(s->elems);
 	free(s);

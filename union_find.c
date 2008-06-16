@@ -8,6 +8,7 @@ typedef tufset *ptufset;
 struct sunion_find {
 	tufset *rep;
 	int max_size;
+	int cant_conj;
 };
 
 bool
@@ -23,11 +24,12 @@ uf_create(const tufpos max) {
 	union_find uf;
 	uf = (union_find)calloc(1,sizeof(struct sunion_find));
 	if (uf!=NULL) {
-		uf->rep = (ptufset)calloc(max,sizeof(tufset));
+		uf->rep = (ptufset)calloc(max+1,sizeof(tufset));
 		if (uf->rep!=NULL)
-			for (i=0;i<max;i++)
+			for (i=1;i<=max;i++)
 				uf->rep[i] = -1;
 		uf->max_size = max;
+		uf->cant_conj = max;
 	}
 	return uf;
 }
@@ -39,7 +41,7 @@ tufset
 uf_find(union_find uf, const tufalpha el) {
 	tufpos r,k;
 	tufset j;
-	
+
 	if (uf!=NULL)
 		if (uf->rep!=NULL) {
 			r = el;
@@ -61,8 +63,7 @@ uf_union(union_find uf, const tufset s1, const tufset s2) {
 	if (!es_rep(uf,s1) || !es_rep(uf,s2))
 		errx(1,"Error, los argumentos de uf_union no son representantes!.\n");
 	else {
-		printf ("UF_before: s1= %d, s2= %d\n",uf->rep[s1],uf->rep[s2]);
-		if (uf->rep[s1] <= uf->rep[s2]) {
+		if (uf->rep[s1] < uf->rep[s2]) {
 			uf->rep[s1] += uf->rep[s2];
 			uf->rep[s2]  = s1;
 		}
@@ -70,15 +71,19 @@ uf_union(union_find uf, const tufset s1, const tufset s2) {
 			uf->rep[s2] += uf->rep[s1];
 			uf->rep[s1]  = s2;	
 		}
-		printf ("UF_after: s1= %d, s2= %d\n",uf->rep[s1],uf->rep[s2]);
+		uf->cant_conj--;
 	}
 }
 
 bool
 uf_oneset(const union_find uf) {
-	return (uf->rep[rep_find(uf,0)]==-uf->max_size);
-}  /*si hay un solo set, el representante debe ser igual a -max_size */
+	return (uf->cant_conj==1);
+}
 
+int
+uf_cant_conj(union_find uf) {
+	return uf->cant_conj;
+}
 
 union_find
 uf_destroy(union_find uf) {
@@ -86,7 +91,8 @@ uf_destroy(union_find uf) {
 	free (uf);
 	return NULL;
 }
-	
+
+/******************Funciones Auxiliares**************************/	
 bool
 es_rep(const union_find uf, const tufpos el) { 
 	return uf->rep[el]<0;

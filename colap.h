@@ -15,8 +15,8 @@ typedef heap colap;
 colap
 colap_create(const tcppos max); /* constructor */
 
-void
-colap_encolar(colap c, const tcpalpha elem); /* encolar */
+colap
+colap_push(colap c, const tcpalpha elem); /* encolar */
 
 tcpalpha
 colap_primero(const colap c); /* primero en la cola */
@@ -25,10 +25,10 @@ void
 colap_pop(colap c); /* saca primero */
 
 bool
-colap_vacia(const colap c); /* cola vacia? */
+colap_empty(const colap c); /* cola vacia? */
 
 bool
-colap_llena(const colap c); /* cola llena? */
+colap_full(const colap c); /* cola llena? */
 
 tcpalpha
 colap_saca(colap c); /* sacar y obtiene cualquier elemento */

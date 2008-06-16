@@ -3,10 +3,7 @@
 
 stalpha
 stalpha_clone(const stalpha a){
-	arista aux;
-	
-	aux=arista_clone(a);
-	return aux;
+	return arista_clone(a);
 }
 
 
