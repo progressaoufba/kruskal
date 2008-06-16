@@ -26,6 +26,7 @@ cinta_av(cinta c);
 tcalpha
 cinta_elec(cinta c);
 
+/*generamos un tcalpha_clone, por lo que se genera memoria nueva*/
 void
 cinta_ins(cinta c, tcalpha t);
 

@@ -1,6 +1,7 @@
 #ifndef STALPHA_H
 #define STALPHA_H
 
+#include <stdlib.h>
 #include "arista.h"
 /*en nuestro caso usamos*/
 typedef arista stalpha;
