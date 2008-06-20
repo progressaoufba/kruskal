@@ -51,7 +51,7 @@ int main (void){
 			uf_union(ccv,cv1,cv2);
 			s1 = stack_push(s1,e);
 		}
-		else 
+		else
 			s2 = stack_push(s2,e);
 	}
 	while (!stack_empty(s1)) {
@@ -65,7 +65,7 @@ int main (void){
 
 		e = stack_top(s2);
 		s2 = stack_pop(s2);
-		cwa_insarbol(cw,e);
+		cwa_ainsrest(cw,e);
 		e = arista_destroy(e);
 	}
 	
@@ -74,12 +74,11 @@ int main (void){
 		cwa_ainsrest(cw,e);
 		arista_destroy(e);
 	}
-	if (uf_cant_conj(ccv)>=2) /*si el grafo no es conexo, decimos la cant de comp. conexas*/
+	if (uf_cant_conj(ccv)>=2) 
 		cwa_insmsg(cw,"//INFO: ????? componentes conexas.\n");
-		/*no se como hacer que ???? sea uf_cant_conj(ccv)*/
-		/*tb hay que ver como para mostrar este msg despues de '{' final
-		en grafoout.dot.. capas pedir el char* en cwa_destroy..*/
-
+	/*si el grafo no es conexo, decimos la cant de comp. conexas*/
+		
+		
 /************* Destruimos todos los TADs *********************/
 
 	stack_destroy(s1);
