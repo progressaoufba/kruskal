@@ -1,25 +1,48 @@
 #include "stack.h"
 
+typedef struct scelda * celda;
+
+struct scelda {
+	stalpha elem;
+	struct scelda * tl;
+};
+
 struct sstack {
 	int tam;
-	stalpha * elems;
+	celda cel;
 };
 
 stack
 stack_create(const size_t maxt){
 	stack s=NULL;
+	
 	s=(stack)calloc(1,sizeof(struct sstack));
 	if (s!=NULL){
 		s->tam=0;
-		s->elems=(stalpha *)calloc(maxt,sizeof(stalpha));
+		/*s->elems=(stalpha *)calloc(maxt+1,sizeof(stalpha));*/
+		s->cel=NULL;/* = (celda)calloc(1,sizeof(struct scelda));
+		if (s->cel!=NULL){
+			s->cel->tl=NULL;
+			
+		}*/
+			
 	}
 	return s;
 }
 
 stack
 stack_push(stack s,const stalpha a){
-	s->elems[s->tam]=a;
-	s->tam++;
+	celda c;
+	s->tam=s->tam+1;
+	/*s->elems[s->tam]=a;*/
+	c=(celda)calloc(1,sizeof(struct scelda));
+	if (c!=NULL){
+		c->elem=a;
+		c->tl=s->cel;
+		s->cel=c;
+	}
+		
+	
 	return s;
 }
 
@@ -35,14 +58,18 @@ stack_empty (const stack s){
 stalpha
 stack_top(const stack s){
 	stalpha a;
-	a=stalpha_clone(s->elems[s->tam-1]); /*generamos memoria*/
+	a=stalpha_clone(s->cel->elem); /*generamos memoria*/
 	return a;
 }
 
 stack
 stack_pop (stack s){
+	celda aux;
 	if (!stack_empty(s)){
-		stalpha_destroy(s->elems[s->tam]);
+		aux=s->cel;
+		stalpha_destroy(s->cel->elem);
+		s->cel=s->cel->tl;
+		free (aux);
 		s->tam=s->tam-1;
 	}
 	return s;
@@ -55,7 +82,7 @@ stack_destroy(stack s){
 	while(!stack_empty(s)){
 		s=stack_pop(s);
 	}
-	free(s->elems);
+	/*free(s->cel);*/
 	free(s);
 	return NULL;
 }
