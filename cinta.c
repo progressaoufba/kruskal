@@ -85,7 +85,9 @@ cinta_del(cinta c) {
 	if (!c->arr)
 		warnx("Error, la cinta no esta arrancada");
 	aux = c->ppd->tl->tl;
-	c->ppd->tl->el = tcalpha_destroy(c->ppd->tl->el);
+	if (c->ppd->tl->el!=NULL)
+		c->ppd->tl->el = tcalpha_destroy(c->ppd->tl->el);
+	
 	free (c->ppd->tl);
 	c->ppd->tl=aux;
 }

@@ -43,11 +43,15 @@ arista
 arista_clone(arista e) {
 	if (e==NULL)
 		errx(EXIT_FAILURE, "Error al crear arista (argumento NULL), archivo %s, linea %i", __FILE__, __LINE__);
+	
 	return arista_create(e->v1,e->v2,e->weight);
 }
 
 arista
 arista_destroy(arista e) {
-	free (e);
+	
+	if (e!=NULL)
+		free (e);
+	
 	return NULL;
 }
