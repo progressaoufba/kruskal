@@ -42,9 +42,7 @@ heap
 hundir(heap h,int q);
 
 
-
 /******************************funciones adicionales****************************/
-
 
 int
 hijo_izq(heap h, int p){ /*tiene que tener hijo*/
