@@ -193,13 +193,11 @@ heap_create(const size_t maxt){
 
 heap
 heap_insert(heap h, const thalpha a){
-	/*printf ("\n\nstart:%i\tend:%i\tsize:%i\n",h->start,h->end,h->size);*/
 	if (!heap_lleno(h)){
-		
 		h->size=h->size+1;
 		h->end=(h->end +1)%h->max_size;
 		
-		h->elems[h->end]=a;
+		h->elems[h->end]=thalpha_clone(a);
 		h=flotar(h,h->end);
 	}
 	else
@@ -224,7 +222,7 @@ heap_pop(heap h){
 	que me digan donde empieza y donde termina e ir moviendo esos numeros(punto *)*/
 	if (!heap_vacio(h)){
 		
-		/*h->elems[1]=*/thalpha_destroy(h->elems[h->start]); /*evitamos el memory leak?*/
+		thalpha_destroy(h->elems[h->start]); /*evitamos el memory leak?*/
 		h->start=(h->start+1) % h->max_size;
 		h->size=h->size-1;
 		
