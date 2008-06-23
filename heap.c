@@ -181,7 +181,7 @@ heap_create(const size_t maxt){
 		h->start=1;
 		h->end=0;
 		h->max_size=maxt;
-		h->elems=(thalpha*)calloc(maxt,sizeof(thalpha));
+		h->elems=(thalpha*)calloc(maxt+1,sizeof(thalpha));
 		
 	}
 	/*else
@@ -212,6 +212,7 @@ heap_first(const heap h){
 	thalpha a;
 	
 	a=thalpha_clone(h->elems[h->start]);
+
 	return a;
 }
 
@@ -223,7 +224,7 @@ heap_pop(heap h){
 	if (!heap_vacio(h)){
 		
 		thalpha_destroy(h->elems[h->start]); /*evitamos el memory leak?*/
-		h->start=(h->start+1) % h->max_size;
+		h->start=(h->start+1)% h->max_size;
 		h->size=h->size-1;
 		
 	}
@@ -246,6 +247,7 @@ heap_saca(heap h){
 			h->end=h->end-1;
 		
 	}*/
+	warnx("EMPTY%i\tstart:%i\n",h->size,h->start);
 	a=heap_first(h);
 	h=heap_pop(h);
 	return a;

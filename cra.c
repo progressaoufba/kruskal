@@ -17,58 +17,58 @@ struct scintrar {
 
 cintrar
 cra_create(void) { /* constructor */
+	int vcant,acant;
 	cintrar cra;
+	
 	cra=(cintrar)calloc(1,sizeof(struct scintrar));
 	if (cra!=NULL) {
-		cra->vcant = 0;
-		cra->acant = 0;
+		fscanf (stdin,"# %d %d\n",&vcant, &acant);
+		cra->vcant = vcant;
+		cra->acant = acant;
+		cra->arem  = acant; 
 		cra->c = cinta_create(aList_vacia());
-		cra->arem = 0;
 		cra->arr = FALSE;
+		while (getchar()!='\n');
 	}
 	return cra;
-	
 }
 
 void
-cra_arr(cintrar cra) { /* arrancar */
-	int vcant,acant;
-	fscanf (stdin,"# %d %d\n",&vcant, &acant);
-	cra->vcant = vcant;
-	cra->acant = acant;
-	cra->arem  = acant; 
-	cra->arr = TRUE; 
-	while (getchar()!='\n');
-	cra_av(cra);
+cra_arr(cintrar cra) { /* arrancar */ 
+	cinta_arr(cra->c);
+	cra->arr = TRUE;
+	cra->arem = cra->acant;
 }
 
 void
 cra_av(cintrar cra) {
-	int v1,v2,weight;
-	arista e;
-	
 	if (cra_fin(cra)) 
 		warnx("Error, Fin de cinta");
 	if (!cra->arr) 
 		warnx("Error, la cinta no esta arrancada");
-	
-	e = NULL;
-	scanf("%d -- %d [label = %d];",&v1,&v2,&weight);
-	e = arista_create(v1,v2,weight);	
-	cinta_ins(cra->c,e);
-	e = arista_destroy(e);
+	cinta_av(cra->c);
 	cra->arem--;
 }
 
 arista
 cra_elec(const cintrar cra) {
+	int v1,v2,weight;
+	arista e;
+	e = NULL;
+	
 	if (!cra->arr) 
 		warnx("Error, la cinta no esta arrancada");
+	if (cra_fin(cra)) 
+		warnx("Error, Fin de cinta");
 		
 	if (!cra_fin(cra))
-		return cinta_elec(cra->c);
-	else	
-		return NULL;
+		if (cinta_elec(cra->c)==NULL) {
+			scanf("%d -- %d [label = %d];",&v1,&v2,&weight);
+			e = arista_create(v1,v2,weight);
+			cinta_ins(cra->c,e);
+			e = arista_destroy(e);
+		}
+	return cinta_elec(cra->c);
 }
 
 bool
@@ -76,7 +76,7 @@ cra_fin(const cintrar cra) {
 	if (!cra->arr) 
 		warnx("Error, la cinta no esta arrancada");
 	
-	return cra->arem==-1;/*el -1 es porque keremos que cra_fin sea que ya no hay nada*/
+	return cra->arem==0;
 }
 	
 int

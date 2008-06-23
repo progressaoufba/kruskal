@@ -30,7 +30,7 @@ int main (void){
 	s1  = stack_create(cantAristas);
 	s2  = stack_create(cantAristas);
 	ccv = uf_create(cantVertices);
-	cw = cwa_create();/*inicializamos la cinta de escritura*/
+	cw = cwa_create();	/*inicializamos la cinta de escritura*/
 	cwa_arr(cw);
 	
 /************* comenzamos con el algoritmo *********************/
@@ -42,7 +42,7 @@ int main (void){
 		uf_add_singulete(ccv,arista_snd(e)); 	/* hace nada */
 		cra_av(cr);
 	}
-	
+
 	while (!uf_oneset(ccv) && !colap_empty(cp)) {
 		e = colap_primero(cp); /*genera una arista*/
 		colap_pop(cp);
@@ -64,7 +64,6 @@ int main (void){
 	}
 	
 	while (!stack_empty(s2)) {
-
 		e = stack_top(s2);
 		s2 = stack_pop(s2);
 		cwa_ainsrest(cw,e);
@@ -73,6 +72,8 @@ int main (void){
 	
 	while (!colap_empty(cp)) {
 		e = colap_saca(cp);
+		if (e==NULL)
+			warnx("EMPTY\n");
 		cwa_ainsrest(cw,e);
 		arista_destroy(e);
 	}
