@@ -44,7 +44,7 @@ bool
 cinta_fin(cinta c) {
 	if (!c->arr)
 		warnx("Error, la cinta no esta arrancada");
-		return (c->ppd->tl == NULL);
+	return (c->ppd->tl == NULL);
 }
 
 void 
@@ -84,11 +84,14 @@ cinta_del(cinta c) {
 	aList aux;
 	if (!c->arr)
 		warnx("Error, la cinta no esta arrancada");
+	if (cinta_fin(c))
+		warnx("Error, esta en fin de cinta");
+		
 	aux = c->ppd->tl->tl;
 	if (c->ppd->tl->el!=NULL)
 		c->ppd->tl->el = tcalpha_destroy(c->ppd->tl->el);
 	
-	free (c->ppd->tl);
+	free(c->ppd->tl);
 	c->ppd->tl=aux;
 }
 

@@ -49,9 +49,7 @@ arista_clone(arista e) {
 
 arista
 arista_destroy(arista e) {
-	
 	if (e!=NULL)
 		free (e);
-	
 	return NULL;
 }

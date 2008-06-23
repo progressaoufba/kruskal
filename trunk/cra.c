@@ -100,9 +100,8 @@ cra_destroy(cintrar cra) { /* destructor */
 	cinta_arr(cra->c);
 	while (!cinta_fin(cra->c))
 		cinta_del(cra->c);
-
+	
 	cinta_destroy(cra->c);
 	free(cra);
-	cra = NULL;
-	return cra;
+	return NULL;
 }
