@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "heap.h"
+#include "err.h"
 
 struct sheap{
 	int size;	/*tamaño*/
@@ -204,7 +205,7 @@ heap_insert(heap h, const thalpha a){
 		h=flotar(h,h->end);
 	}
 	else
-		printf("El heap esta lleno, ya no se puede agregar mas\n");/*ERROR....*/
+		warnx("El heap esta lleno, ya no se puede agregar mas\n");/*ERROR....*/
 	
 	
 	return h;
@@ -239,16 +240,18 @@ heap_pop(heap h){
 thalpha
 heap_saca(heap h){
 	thalpha a=NULL;
-	if (!heap_vacio(h)){
+	/*if (!heap_vacio(h)){
 		a=thalpha_clone(h->elems[h->end]);
-		/*h->elems[h->size]=*/thalpha_destroy(h->elems[h->end]);
+		thalpha_destroy(h->elems[h->end]);
 		h->size=h->size-1;
 		if (h->end == 1)
 			h->end=h->max_size-1;
 		else
 			h->end=h->end-1;
 		
-	}
+	}*/
+	a=heap_first(h);
+	h=heap_pop(h);
 	return a;
 }
 	
