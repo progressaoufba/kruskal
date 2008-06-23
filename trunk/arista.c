@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <assert.h>
 #include "arista.h"
+#include "err.h"
 
 struct sarista {
 	int v1;
@@ -41,9 +42,12 @@ arista_weight (arista e) {
 
 arista
 arista_clone(arista e) {
-	if (e==NULL)
-		errx(EXIT_FAILURE, "Error al crear arista (argumento NULL), archivo %s, linea %i", __FILE__, __LINE__);
-	return arista_create(e->v1,e->v2,e->weight);
+	if (e==NULL){
+		warnx( "Error al crear arista (argumento NULL)");
+		return NULL;
+	}
+	else
+		return arista_create(e->v1,e->v2,e->weight);
 }
 
 arista
