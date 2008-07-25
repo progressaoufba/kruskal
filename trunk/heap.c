@@ -1,147 +1,71 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "heap.h"
-#include "err.h"
+#include "bool.h"
+#include "thalpha.h"
 
 struct sheap{
-	int size;	/*tamaño*/
-	int start;
-	int end;
-	int max_size;	/*tamaño maximo del arreglo*/
+	int tam; /*tamaÃ±o*/
+	size_t tmax; /*tamaÃ±o maximo del arreglo*/
 	thalpha * elems;
 };
 
+/**********************funciones adicionales***************/
 int
-hijo_izq(heap h,int p);
-
-int
-hijo_der(heap h,int p);
-
-int
-padre(heap h,int p);
-
-bool
-tiene_padre(heap h, int p);
-
-bool
-tiene_hijo(heap h, int p);
-
-int
-hijo_menor(heap h, int p);
-
-heap
-subir (heap h, int q);
-
-bool
-debe_subir (heap h, int q);
-
-heap
-flotar (heap h, int q);
-
-heap
-hundir(heap h,int q);
-
-
-/******************************funciones adicionales****************************/
-
-int
-hijo_izq(heap h, int p){ /*tiene que tener hijo*/
-	int paux;
-	if (p<=h->start){
-		paux=2*p;
-	}
-	else{
-		paux=h->start-p;
-		paux=(2*paux+h->start)%h->max_size;
-		
-	}
-	
-	return paux;
+hijo_izq(int p){ /*tiene que tener hijo*/
+	return 2*p;
 }
 
 int
-hijo_der(heap h,int p){/*tiene que tener hijo*/
-	int paux;
-	if (p<=h->start){
-		paux=2*p+1;
-	}
-	else{
-		paux=h->start-p;
-		paux=(2*paux+1+h->start)%h->max_size;
-		
-	}
-	
-	return paux;
+hijo_der(int p){/*tiene que tener hijo*/
+	return 2*p+1;
 }
 
 int
-padre(heap h,int p){/*no tiene q ser el de arriba de todos*/
-	int paux;
-	if (p< h->start){
-		paux=p+(h->max_size - h->start);
-		paux=(int) paux/2;
-		paux=(h->start+paux)%h->max_size;
-	}
-	else{
-		paux=p-h->start;
-		paux=(int)paux/2;
-		paux=paux+h->start;
-	}
-	
-	return paux;
+padre (int h){/*no tiene q ser el de arriba de todos*/
+	return (int) h/2;
 }
 
 bool
-tiene_hijo(heap h, int p){
-	if (p <= h->size && p>=1)
-		return (2*p<=h->size);
+tiene_hijo (heap h, int p){
+	if (p <= h->tam && p>=1)
+		return (2*p<=h->tam);
 	else
 		return FALSE;
 }
 
 bool
 tiene_padre(heap h, int p){
-	return (p!=h->start);
+	return (p>1 && p <= h->tam);
 }
 
 int
-hijo_menor(heap h, int p){
+hijo_menor (heap h, int p){
 	if (tiene_hijo(h,p))
-		if (hijo_der(h,p)<= h->size && thalpha_menor(h->elems[hijo_der(h,p)],h->elems[hijo_izq(h,p)]))
-			return hijo_der(h,p);
+		if (hijo_der(p)<= h->tam && thalpha_menor(h->elems[hijo_der(p)],h->elems[hijo_izq(p)]))
+			return hijo_der(p);
 		else
-			return hijo_izq(h,p);
+			return hijo_izq(p);
 	else
 		/*ERROR:...*/
 	
 	return 0;
 }
 	
-	
-bool
-heap_vacio(const heap h){
-	return (h->size==0);
-}
-
-bool
-heap_lleno(const heap h){
-	return (h->size >= h->max_size);/*porque en heap_create hicimos un calloc (tmax+1...)*/
-}
-
 
 heap
 subir (heap h, int q){
 	int p;
 	
-	p=padre(h,q);
+	p=padre(q);
 	thalpha_swap(h->elems,p,q);
 	return h;
 }
 
 bool
 debe_subir (heap h, int q){
-	if ((q>=h->start && q<= h->end) || ((q>=h->start && q<=h->max_size) || q<= h->end))
-		return thalpha_menor(h->elems[q],h->elems[padre(h,q)]);
+	if (q>=1 && q<=h->tam)
+		return thalpha_menor(h->elems[q],h->elems[padre(q)]);
 	else
 		return FALSE;
 }
@@ -152,7 +76,7 @@ flotar (heap h, int q){
 	p=q;
 	while (tiene_padre(h,p) && debe_subir(h,p)){
 		h=subir(h,p);
-		p=padre(h,p);
+		p=padre(p);
 	}
 	return h;
 
@@ -169,7 +93,8 @@ hundir(heap h,int q){
 	return h;
 }
 	
-/**********************************************************************/
+	
+/*************************funciones propias del heap*******************************/
 
 heap
 heap_create(const size_t maxt){ 
@@ -177,32 +102,25 @@ heap_create(const size_t maxt){
 	
 	h=(heap)calloc(1,sizeof(struct sheap));
 	if(h!=NULL){
-		h->size=0;
-		h->start=1;
-		h->end=0;
-		h->max_size=maxt;
+		h->tam=0;
+		h->tmax=maxt;
 		h->elems=(thalpha*)calloc(maxt+1,sizeof(thalpha));
-		
 	}
-	/*else
-		ERROR:........*/
-	
+
 	return h;
 }	
 	
 
 heap
 heap_insert(heap h, const thalpha a){
+	if (h!=NULL)
 	if (!heap_lleno(h)){
-		h->size=h->size+1;
-		h->end=(h->end +1)%h->max_size;
-		
-		h->elems[h->end]=thalpha_clone(a);
-		h=flotar(h,h->end);
+		h->tam=h->tam+1;
+		h->elems[h->tam]=a;
+		h=flotar(h,h->tam);
 	}
 	else
-		warnx("El heap esta lleno, ya no se puede agregar mas\n");/*ERROR....*/
-	
+		printf("El heap esta lleno, ya no se puede agregar mas\n");
 	
 	return h;
 }
@@ -210,9 +128,7 @@ heap_insert(heap h, const thalpha a){
 thalpha
 heap_first(const heap h){
 	thalpha a;
-	
-	a=thalpha_clone(h->elems[h->start]);
-
+	a=thalpha_clone(h->elems[1]);
 	return a;
 }
 
@@ -222,34 +138,33 @@ heap_pop(heap h){
 	la forma eficiente de hacer esto seria con 2 enteros
 	que me digan donde empieza y donde termina e ir moviendo esos numeros(punto *)*/
 	if (!heap_vacio(h)){
-		
-		thalpha_destroy(h->elems[h->start]); /*evitamos el memory leak?*/
-		h->start=(h->start+1)% h->max_size;
-		h->size=h->size-1;
-		
+		thalpha_destroy(h->elems[1]); /*evitamos el memory leak?*/
+		h->elems[1]=h->elems[h->tam];
+		h->tam=h->tam-1;
+		h=hundir(h,1);
 	}
 	return h;
 }
 	
 
+bool
+heap_vacio(const heap h){
+	return (h->tam==0);
+}
+
+bool
+heap_lleno(const heap h){
+	return (h->tmax<=h->tam);/*porque en heap_create hicimos un calloc (tmax+1...)*/
+}
 
 
 thalpha
 heap_saca(heap h){
 	thalpha a=NULL;
-	/*if (!heap_vacio(h)){
-		a=thalpha_clone(h->elems[h->end]);
-		thalpha_destroy(h->elems[h->end]);
-		h->size=h->size-1;
-		if (h->end == 1)
-			h->end=h->max_size-1;
-		else
-			h->end=h->end-1;
-		
-	}*/
-	warnx("EMPTY%i\tstart:%i\n",h->size,h->start);
-	a=heap_first(h);
-	h=heap_pop(h);
+	if (!heap_vacio(h)){
+		a = h->elems[h->tam];
+		h->tam=h->tam-1;
+	}
 	return a;
 }
 	
@@ -259,14 +174,11 @@ heap_destroy(heap h){
 	 /*vamos a destruir todo el heap completo con todos los datos adentro*/
 	int i=0;
 	if (h!=NULL){
-		for (i=0;i<=h->size;i++)
-			h=heap_pop(h);
-		
+		for (i=1;i<=h->tam;i++)
+			thalpha_destroy(h->elems[i]);
 		free(h->elems);
 		free(h);
 	}
-
-
 	return NULL;
 }
 
