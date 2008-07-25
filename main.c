@@ -42,7 +42,6 @@ int main (void){
 		uf_add_singulete(ccv,arista_snd(e)); 	/* hace nada */
 		cra_av(cr);
 	}
-
 	while (!uf_oneset(ccv) && !colap_empty(cp)) {
 		e = colap_primero(cp); /*genera una arista*/
 		colap_pop(cp);
@@ -55,21 +54,18 @@ int main (void){
 		else
 			s2 = stack_push(s2,e);
 	}
-	
 	while (!stack_empty(s1)) {
 		e = stack_top(s1);
 		s1 = stack_pop(s1);		
 		cwa_insarbol(cw,e);
 		e = arista_destroy(e);
 	}
-	
 	while (!stack_empty(s2)) {
 		e = stack_top(s2);
 		s2 = stack_pop(s2);
 		cwa_ainsrest(cw,e);
 		e = arista_destroy(e);
 	}
-	
 	while (!colap_empty(cp)) {
 		e = colap_saca(cp);
 		if (e==NULL)
@@ -77,9 +73,9 @@ int main (void){
 		cwa_ainsrest(cw,e);
 		arista_destroy(e);
 	}
-	
+	/*
 	if (uf_cant_conj(ccv)>=2) 
-		cwa_insmsg(cw,"//INFO: ????? componentes conexas.\n");
+		cwa_insmsg(cw,"//INFO: ????? componentes conexas.\n");*/
 	/*si el grafo no es conexo, decimos la cant de comp. conexas*/
 		
 		
@@ -92,7 +88,6 @@ int main (void){
 	cra_destroy(cr);
 	cwa_destroy(cw);
 
-	
 	return 0;
 }
 
